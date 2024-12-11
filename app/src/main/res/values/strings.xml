@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Project1</string>
+    <string name="login_text">Login</string>
+    <string name="logout">Logout</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="loginNow">Click to login</string>
+    <string name="registerNow">Click to register</string>
+    <string name="logo_description">Logo of the app</string>
+</resources>
