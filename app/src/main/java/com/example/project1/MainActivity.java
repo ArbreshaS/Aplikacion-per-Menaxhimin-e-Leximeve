@@ -18,9 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-    Button button;
+    Button button, btnHome, btnProfile;
     TextView textView;
     FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,24 +35,36 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.logout);
+        btnHome = findViewById(R.id.btn_home);
+        btnProfile = findViewById(R.id.btn_profile);
         textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
+
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             finish();
-        }
-        else {
+        } else {
             textView.setText(user.getEmail());
         }
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
+
+        button.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Navigate to Home when "Go to Home" button is clicked
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Home.class);
+            startActivity(intent);
+        });
+
+        // Navigate to Profile when "Go to Profile" button is clicked
+        btnProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Profile.class);
+            startActivity(intent);
         });
     }
 }

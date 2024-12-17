@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/bg_main"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -14,12 +15,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-       />
+        />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:textAlignment="center"
+        android:text="Welcome to your library!" />
+
+
+    <Button
+        android:id="@+id/btn_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Home" />
+
+    <Button
+        android:id="@+id/btn_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Go to Profile" />
 
     <Button
         android:id="@+id/logout"
         android:text="@string/logout"
         android:layout_width="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_height="wrap_content"/>
 
 

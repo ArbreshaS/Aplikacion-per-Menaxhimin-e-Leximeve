@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="12dp"
+    android:background="?android:attr/selectableItemBackgroundBorderless">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@android:color/white"
+        android:clipToPadding="false">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginBottom="8dp">
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_info_details"
+                app:tint="@color/color"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/book_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book Title"
+                android:textSize="20sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+        <!-- Book Author Section -->
+        <TextView
+            android:id="@+id/book_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Author"
+            android:textSize="16sp"
+            android:textColor="#757575"
+            android:layout_marginBottom="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+
+        <TextView
+            android:id="@+id/book_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Short Description"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="12dp"
+            android:maxLines="3"
+            android:ellipsize="end"/>
+
+        <!-- Year, Rating, and Pages Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <!-- Year -->
+            <TextView
+                android:id="@+id/book_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Year"
+                android:textSize="14sp"
+                android:textColor="#9E9E9E"
+                android:layout_marginEnd="16dp"/>
+
+            <!-- Rating -->
+            <TextView
+                android:id="@+id/book_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating"
+                android:textSize="14sp"
+                android:textColor="#FF9800"
+                android:layout_marginEnd="16dp"/>
+
+            <!-- Pages -->
+            <TextView
+                android:id="@+id/book_totalPages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Pages"
+                android:textSize="14sp"
+                android:textColor="#9E9E9E"/>
+        </LinearLayout>
+
+        <!-- Progress Section with a progress bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <!-- Current Page -->
+            <TextView
+                android:id="@+id/book_currentPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Page"
+                android:textSize="14sp"
+                android:textColor="#9E9E9E"/>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/book_progressBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:progress="50"
+                android:progressDrawable="@drawable/custom_progress_bar" />
+
+            <!-- Completed Status -->
+            <TextView
+                android:id="@+id/book_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:textSize="14sp"
+                android:textColor="#4CAF50"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
