@@ -13,9 +13,9 @@
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewBooks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnAddBook"
@@ -26,16 +26,3 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp" />
 </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-

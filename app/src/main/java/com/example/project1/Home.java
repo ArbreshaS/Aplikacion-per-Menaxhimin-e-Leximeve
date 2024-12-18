@@ -7,36 +7,111 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends AppCompatActivity {
 
     private TextView emptyMessage;
+    private RecyclerView recyclerView;
+    private BookAdapter bookAdapter;
+    private List<Book> bookList;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Enable the back button (Up button) in the action bar
+        // Enable the back button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // Initialize the empty message TextView
+        // Initialize Views
         emptyMessage = findViewById(R.id.emptyMessage);
+        recyclerView = findViewById(R.id.recyclerViewBooks);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        bookList = new ArrayList<>();
+        bookAdapter = new BookAdapter(bookList);
+        recyclerView.setAdapter(bookAdapter);
+
+        db = FirebaseFirestore.getInstance();
+
+        // Fetch books from Firestore
+        fetchBooks();
 
         // Button to add a book
         Button btnAddBook = findViewById(R.id.btnAddBook);
         btnAddBook.setOnClickListener(v -> {
-            // Open the AddBookActivity
             Intent intent = new Intent(Home.this, AddBookActivity.class);
             startActivity(intent);
         });
     }
 
     @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+    protected void onResume() {
+        super.onResume();
+        // Refresh books when returning to this activity
+        fetchBooks();
+    }
+
+    private void fetchBooks() {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        db.collection("books")
+                .whereEqualTo("userId", currentUserId) // Filter by current user's ID
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        bookList.clear(); // Clear the existing list
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Safely retrieve fields from Firestore
+                            String title = document.getString("Title");
+                            String author = document.getString("Author");
+                            String description = document.getString("Description");
+                            int year = document.contains("Year") ? document.getLong("Year").intValue() : 0;
+                            int totalPages = document.contains("TotalPages") ? document.getLong("TotalPages").intValue() : 0;
+                            boolean completed = document.contains("Completed") ? document.getBoolean("Completed") : false;
+                            int rating = document.contains("Rating") ? document.getLong("Rating").intValue() : 0;
+
+                            // Add book to the list
+                            Book book = new Book(title, author, description, year, 0, totalPages, completed, rating);
+                            bookList.add(book);
+                        }
+
+                        // Notify adapter and handle empty state
+                        bookAdapter.notifyDataSetChanged();
+                        if (bookList.isEmpty()) {
+                            emptyMessage.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                        } else {
+                            emptyMessage.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        Toast.makeText(Home.this, "Failed to load books.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(Home.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
