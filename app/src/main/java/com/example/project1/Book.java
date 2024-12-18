@@ -10,24 +10,19 @@ public class Book {
     private int year;
     private int currentPage;
     private int totalPages;
-    private boolean completed;
     private int rating;
-    private String documentId; // New field for Firestore document ID
+    private String documentId;
 
-    // Constructor with all necessary fields
-    public Book(String title, String author, String description, int year, int currentPage,
-                int totalPages, boolean completed, int rating) {
+    public Book(String title, String author, String description, int year, int currentPage, int totalPages, int rating) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.year = year;
         this.currentPage = currentPage;
         this.totalPages = totalPages;
-        this.completed = completed;
         this.rating = rating;
     }
 
-    // Getters and Setters
     public String getTitle() {
         return title;
     }
@@ -76,14 +71,6 @@ public class Book {
         this.totalPages = totalPages;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
     public int getRating() {
         return rating;
     }
@@ -100,7 +87,6 @@ public class Book {
         this.documentId = documentId;
     }
 
-    // Convert Book object to a Map for Firestore
     public Map<String, Object> toMap(String userId) {
         Map<String, Object> bookMap = new HashMap<>();
         bookMap.put("Title", title);
@@ -109,9 +95,8 @@ public class Book {
         bookMap.put("Year", year);
         bookMap.put("CurrentPage", currentPage);
         bookMap.put("TotalPages", totalPages);
-        bookMap.put("Completed", completed);
         bookMap.put("Rating", rating);
-        bookMap.put("userId", userId); // Add userId to associate the book with the user
+        bookMap.put("userId", userId);
         return bookMap;
     }
 }

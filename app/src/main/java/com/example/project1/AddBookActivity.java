@@ -71,8 +71,8 @@ public class AddBookActivity extends AppCompatActivity {
         // Get the current user ID
         String userId = auth.getCurrentUser().getUid();
 
-        // Create a book object
-        Book newBook = new Book(title, author, description, year, 0, totalPages, false, rating);
+        Book newBook = new Book(title, author, description, year, 0, totalPages, rating);
+
 
         // Save the book to Firestore
         db.collection("books")

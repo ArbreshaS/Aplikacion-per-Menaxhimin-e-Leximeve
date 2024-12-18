@@ -125,17 +125,6 @@
                 android:layout_marginEnd="20dp"/>
 
 
-
-            <!-- Completed Status -->
-            <TextView
-                android:id="@+id/book_completed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Completed"
-                android:textSize="14sp"
-                android:textColor="#4CAF50"
-                android:layout_marginEnd="20dp"/>
-
             <!--Edit button-->
             <Button
                 android:id="@+id/btn_edit"
@@ -143,7 +132,12 @@
                 android:layout_height="wrap_content"
                 android:text="Edit"
                 android:layout_margin="8dp" />
-
+            <!--Delete Button-->
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete" />
         </LinearLayout>
 
     </LinearLayout>

@@ -38,8 +38,9 @@ public class Home extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         bookList = new ArrayList<>();
-        bookAdapter = new BookAdapter(bookList);
+        bookAdapter = new BookAdapter(this, bookList); // Pass 'this' as context
         recyclerView.setAdapter(bookAdapter);
+
 
         db = FirebaseFirestore.getInstance();
         fetchBooks();
@@ -75,7 +76,9 @@ public class Home extends AppCompatActivity {
                             boolean completed = document.contains("Completed") ? document.getBoolean("Completed") : false;
                             int rating = document.contains("Rating") ? document.getLong("Rating").intValue() : 0;
 
-                            Book book = new Book(title, author, description, year, 0, totalPages, completed, rating);
+                            Book book = new Book(title, author, description, year, 0, totalPages, rating);
+                            book.setDocumentId(document.getId());
+
                             book.setDocumentId(document.getId());
                             bookList.add(book);
                         }

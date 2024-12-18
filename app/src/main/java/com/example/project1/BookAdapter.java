@@ -1,19 +1,28 @@
 package com.example.project1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
+    private Context context;
     private List<Book> bookList;
 
-    public BookAdapter(List<Book> bookList) {
+    public BookAdapter(Context context, List<Book> bookList) {
+        this.context = context;
         this.bookList = bookList;
     }
 
@@ -26,21 +35,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
         Book book = bookList.get(position);
+
         holder.titleTextView.setText(book.getTitle());
         holder.authorTextView.setText(book.getAuthor());
         holder.descriptionTextView.setText(book.getDescription());
         holder.yearTextView.setText(String.valueOf(book.getYear()));
-        holder.currentPageTextView.setText(String.valueOf(book.getCurrentPage()));
         holder.totalPagesTextView.setText(String.valueOf(book.getTotalPages()));
         holder.ratingTextView.setText(String.valueOf(book.getRating()));
 
-        if (book.isCompleted()) {
-            holder.completedTextView.setText("Completed");
-        } else {
-            holder.completedTextView.setText("In Progress");
-        }
-
-        // Set up Edit button
+        // Edit button
         holder.editButton.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), EditBookActivity.class);
             intent.putExtra("documentId", book.getDocumentId());
@@ -52,6 +55,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             intent.putExtra("rating", book.getRating());
             holder.itemView.getContext().startActivity(intent);
         });
+
+        // Delete button
+        holder.deleteButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete Book")
+                    .setMessage("Are you sure you want to delete this book?")
+                    .setPositiveButton("Yes", (dialog, which) -> deleteBook(book, position))
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
 
     @Override
@@ -59,16 +72,21 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return bookList.size();
     }
 
+    private void deleteBook(Book book, int position) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("books").document(book.getDocumentId())
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    bookList.remove(position);
+                    notifyItemRemoved(position);
+                    Toast.makeText(context, "Book deleted successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete book.", Toast.LENGTH_SHORT).show());
+    }
+
     public static class BookViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView authorTextView;
-        TextView descriptionTextView;
-        TextView yearTextView;
-        TextView currentPageTextView;
-        TextView totalPagesTextView;
-        TextView ratingTextView;
-        TextView completedTextView;
-        Button editButton; // Add this
+        TextView titleTextView, authorTextView, descriptionTextView, yearTextView, totalPagesTextView, ratingTextView;
+        Button editButton, deleteButton;
 
         public BookViewHolder(View itemView) {
             super(itemView);
@@ -76,11 +94,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             authorTextView = itemView.findViewById(R.id.book_author);
             descriptionTextView = itemView.findViewById(R.id.book_description);
             yearTextView = itemView.findViewById(R.id.book_year);
-            currentPageTextView = itemView.findViewById(R.id.book_currentPage);
             totalPagesTextView = itemView.findViewById(R.id.book_totalPages);
             ratingTextView = itemView.findViewById(R.id.book_rating);
-            completedTextView = itemView.findViewById(R.id.book_completed);
-            editButton = itemView.findViewById(R.id.btn_edit); // Add this
+            editButton = itemView.findViewById(R.id.btn_edit);
+            deleteButton = itemView.findViewById(R.id.btn_delete);
         }
     }
 }
