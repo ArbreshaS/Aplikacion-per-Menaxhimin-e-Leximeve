@@ -1,11 +1,12 @@
 package com.example.project1;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
@@ -18,17 +19,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate the layout for each book item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_item, parent, false);
         return new BookViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
-        // Get the current book from the list
         Book book = bookList.get(position);
-
-        // Set the data for each TextView
         holder.titleTextView.setText(book.getTitle());
         holder.authorTextView.setText(book.getAuthor());
         holder.descriptionTextView.setText(book.getDescription());
@@ -37,12 +34,24 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.totalPagesTextView.setText(String.valueOf(book.getTotalPages()));
         holder.ratingTextView.setText(String.valueOf(book.getRating()));
 
-        // Set the Completed status text
         if (book.isCompleted()) {
             holder.completedTextView.setText("Completed");
         } else {
             holder.completedTextView.setText("In Progress");
         }
+
+        // Set up Edit button
+        holder.editButton.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), EditBookActivity.class);
+            intent.putExtra("documentId", book.getDocumentId());
+            intent.putExtra("title", book.getTitle());
+            intent.putExtra("author", book.getAuthor());
+            intent.putExtra("description", book.getDescription());
+            intent.putExtra("year", book.getYear());
+            intent.putExtra("totalPages", book.getTotalPages());
+            intent.putExtra("rating", book.getRating());
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -50,7 +59,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return bookList.size();
     }
 
-    // ViewHolder class to hold references to each item view
     public static class BookViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView authorTextView;
@@ -60,6 +68,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         TextView totalPagesTextView;
         TextView ratingTextView;
         TextView completedTextView;
+        Button editButton; // Add this
 
         public BookViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +80,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             totalPagesTextView = itemView.findViewById(R.id.book_totalPages);
             ratingTextView = itemView.findViewById(R.id.book_rating);
             completedTextView = itemView.findViewById(R.id.book_completed);
+            editButton = itemView.findViewById(R.id.btn_edit); // Add this
         }
     }
 }

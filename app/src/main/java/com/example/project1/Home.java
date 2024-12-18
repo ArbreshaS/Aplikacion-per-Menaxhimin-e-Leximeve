@@ -6,17 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +29,10 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Enable the back button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // Initialize Views
         emptyMessage = findViewById(R.id.emptyMessage);
         recyclerView = findViewById(R.id.recyclerViewBooks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -48,11 +42,8 @@ public class Home extends AppCompatActivity {
         recyclerView.setAdapter(bookAdapter);
 
         db = FirebaseFirestore.getInstance();
-
-        // Fetch books from Firestore
         fetchBooks();
 
-        // Button to add a book
         Button btnAddBook = findViewById(R.id.btnAddBook);
         btnAddBook.setOnClickListener(v -> {
             Intent intent = new Intent(Home.this, AddBookActivity.class);
@@ -63,7 +54,6 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh books when returning to this activity
         fetchBooks();
     }
 
@@ -71,13 +61,12 @@ public class Home extends AppCompatActivity {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         db.collection("books")
-                .whereEqualTo("userId", currentUserId) // Filter by current user's ID
+                .whereEqualTo("userId", currentUserId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        bookList.clear(); // Clear the existing list
+                        bookList.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Safely retrieve fields from Firestore
                             String title = document.getString("Title");
                             String author = document.getString("Author");
                             String description = document.getString("Description");
@@ -86,12 +75,11 @@ public class Home extends AppCompatActivity {
                             boolean completed = document.contains("Completed") ? document.getBoolean("Completed") : false;
                             int rating = document.contains("Rating") ? document.getLong("Rating").intValue() : 0;
 
-                            // Add book to the list
                             Book book = new Book(title, author, description, year, 0, totalPages, completed, rating);
+                            book.setDocumentId(document.getId());
                             bookList.add(book);
                         }
 
-                        // Notify adapter and handle empty state
                         bookAdapter.notifyDataSetChanged();
                         if (bookList.isEmpty()) {
                             emptyMessage.setVisibility(View.VISIBLE);
@@ -108,7 +96,6 @@ public class Home extends AppCompatActivity {
                     Toast.makeText(Home.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {

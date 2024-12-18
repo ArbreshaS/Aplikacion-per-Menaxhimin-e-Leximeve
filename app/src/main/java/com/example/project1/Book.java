@@ -10,8 +10,9 @@ public class Book {
     private int year;
     private int currentPage;
     private int totalPages;
-    private boolean completed;  // Added field for completed status
-    private int rating;         // Added field for rating
+    private boolean completed;
+    private int rating;
+    private String documentId; // New field for Firestore document ID
 
     // Constructor with all necessary fields
     public Book(String title, String author, String description, int year, int currentPage,
@@ -26,7 +27,7 @@ public class Book {
         this.rating = rating;
     }
 
-    // Getters and Setters (optional, if you need them)
+    // Getters and Setters
     public String getTitle() {
         return title;
     }
@@ -89,6 +90,14 @@ public class Book {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
     // Convert Book object to a Map for Firestore

@@ -121,16 +121,10 @@
                 android:layout_height="wrap_content"
                 android:text="Current Page"
                 android:textSize="14sp"
-                android:textColor="#9E9E9E"/>
+                android:textColor="#9E9E9E"
+                android:layout_marginEnd="20dp"/>
 
-            <!-- Progress Bar -->
-            <ProgressBar
-                android:id="@+id/book_progressBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:progress="50"
-                android:progressDrawable="@drawable/custom_progress_bar" />
+
 
             <!-- Completed Status -->
             <TextView
@@ -139,7 +133,17 @@
                 android:layout_height="wrap_content"
                 android:text="Completed"
                 android:textSize="14sp"
-                android:textColor="#4CAF50"/>
+                android:textColor="#4CAF50"
+                android:layout_marginEnd="20dp"/>
+
+            <!--Edit button-->
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:layout_margin="8dp" />
+
         </LinearLayout>
 
     </LinearLayout>
