@@ -8,29 +8,34 @@
         android:id="@+id/editTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:hint="Title" />
 
     <EditText
         android:id="@+id/editTextAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:hint="Author" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:hint="Description" />
 
     <EditText
         android:id="@+id/editTextYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:hint="Year" />
 
     <EditText
         android:id="@+id/editTextTotalPages"
         android:layout_width="match_parent"
+        android:padding="16dp"
         android:layout_height="wrap_content"
         android:hint="Total Pages" />
 
@@ -38,6 +43,7 @@
         android:id="@+id/editTextRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:hint="Rating" />
 
     <Button
