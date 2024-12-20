@@ -41,34 +41,6 @@
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="16dp"
-        android:background="@drawable/icon_background"
-        android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/btn_home"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="32dp"
-            android:src="@drawable/darker_home"
-            />
-
-        <ImageView
-            android:id="@+id/btn_profile"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="32dp"
-            android:src="@drawable/user"
-
-            />
-
-
-    </LinearLayout>
 
 </RelativeLayout>
