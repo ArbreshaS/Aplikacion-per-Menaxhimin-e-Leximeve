@@ -6,13 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class Home extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         bookList = new ArrayList<>();
-        bookAdapter = new BookAdapter(this, bookList); // Pass 'this' as context
+        bookAdapter = new BookAdapter(this, bookList, false); // Pass 'false' for Home View
         recyclerView.setAdapter(bookAdapter);
 
 
@@ -73,14 +76,15 @@ public class Home extends AppCompatActivity {
                             String description = document.getString("Description");
                             int year = document.contains("Year") ? document.getLong("Year").intValue() : 0;
                             int totalPages = document.contains("TotalPages") ? document.getLong("TotalPages").intValue() : 0;
-                            boolean completed = document.contains("Completed") ? document.getBoolean("Completed") : false;
-                            int rating = document.contains("Rating") ? document.getLong("Rating").intValue() : 0;
+                            int currentPage = document.contains("CurrentPage") ? document.getLong("CurrentPage").intValue() : 0;
+                            boolean completed = document.contains("completed") ? document.getBoolean("completed") : false;
 
-                            Book book = new Book(title, author, description, year, 0, totalPages, rating);
-                            book.setDocumentId(document.getId());
-
-                            book.setDocumentId(document.getId());
-                            bookList.add(book);
+                            // Ensure we don't display completed books
+                            if (!completed) {
+                                Book book = new Book(title, author, description, year, currentPage, totalPages);
+                                book.setDocumentId(document.getId());
+                                bookList.add(book);
+                            }
                         }
 
                         bookAdapter.notifyDataSetChanged();

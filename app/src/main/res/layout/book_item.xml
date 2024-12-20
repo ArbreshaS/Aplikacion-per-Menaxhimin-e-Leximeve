@@ -69,12 +69,7 @@
             android:ellipsize="end"/>
 
         <!-- Year, Rating, and Pages Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start|center_vertical"
-            android:layout_marginBottom="12dp">
+
 
             <!-- Year -->
             <TextView
@@ -86,16 +81,6 @@
                 android:textColor="#9E9E9E"
                 android:layout_marginEnd="16dp"/>
 
-            <!-- Rating -->
-            <TextView
-                android:id="@+id/book_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rating"
-                android:textSize="14sp"
-                android:textColor="#FF9800"
-                android:layout_marginEnd="16dp"/>
-
             <!-- Pages -->
             <TextView
                 android:id="@+id/book_totalPages"
@@ -104,7 +89,17 @@
                 android:text="Total Pages"
                 android:textSize="14sp"
                 android:textColor="#9E9E9E"/>
-        </LinearLayout>
+
+        <!-- Current Page -->
+        <TextView
+            android:id="@+id/book_currentPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Page"
+            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            android:layout_marginEnd="20dp"/>
+
 
         <!-- Progress Section with a progress bar -->
         <LinearLayout
@@ -113,16 +108,6 @@
             android:orientation="horizontal"
             android:gravity="start|center_vertical"
             android:layout_marginBottom="16dp">
-
-            <!-- Current Page -->
-            <TextView
-                android:id="@+id/book_currentPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current Page"
-                android:textSize="14sp"
-                android:textColor="#9E9E9E"
-                android:layout_marginEnd="20dp"/>
 
 
             <!--Edit button-->
@@ -138,6 +123,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete" />
+
+            <Button
+                android:id="@+id/btn_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:layout_marginStart="8dp" />
+            <!-- Add a RatingBar for displaying the rating -->
+            <RatingBar
+                android:id="@+id/book_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:isIndicator="true" />
+
         </LinearLayout>
 
     </LinearLayout>

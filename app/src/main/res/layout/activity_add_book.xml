@@ -69,16 +69,16 @@
         android:fontFamily="sans-serif-medium"/>
 
     <EditText
-        android:id="@+id/editTextRating"
+        android:id="@+id/editTextCurrentPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Rating (1-5)"
+        android:hint="Current Page"
         android:inputType="number"
         android:textColor="#333333"
         android:textColorHint="#888888"
         android:background="@drawable/rounded_edittext"
         android:padding="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:fontFamily="sans-serif-medium"/>
 
     <Button

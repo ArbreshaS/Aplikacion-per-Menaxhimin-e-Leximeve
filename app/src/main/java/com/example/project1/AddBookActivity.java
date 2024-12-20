@@ -2,7 +2,6 @@ package com.example.project1;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddBookActivity extends AppCompatActivity {
 
-    private EditText titleEditText, authorEditText, descriptionEditText, yearEditText, totalPagesEditText, ratingEditText;
+    private EditText titleEditText, authorEditText, descriptionEditText, yearEditText, totalPagesEditText, currentPageEditText;
     private Button saveButton;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -30,7 +29,7 @@ public class AddBookActivity extends AppCompatActivity {
         descriptionEditText = findViewById(R.id.editTextDescription);
         yearEditText = findViewById(R.id.editTextYear);
         totalPagesEditText = findViewById(R.id.editTextTotalPages);
-        ratingEditText = findViewById(R.id.editTextRating);
+        currentPageEditText = findViewById(R.id.editTextCurrentPage);
         saveButton = findViewById(R.id.btnSaveBook);
 
         // Firebase instance
@@ -48,35 +47,35 @@ public class AddBookActivity extends AppCompatActivity {
         String description = descriptionEditText.getText().toString().trim();
         String yearText = yearEditText.getText().toString().trim();
         String totalPagesText = totalPagesEditText.getText().toString().trim();
-        String ratingText = ratingEditText.getText().toString().trim();
+        String currentPageText = currentPageEditText.getText().toString().trim();
 
         // Check for empty fields
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(description) ||
-                TextUtils.isEmpty(yearText) || TextUtils.isEmpty(totalPagesText) || TextUtils.isEmpty(ratingText)) {
+                TextUtils.isEmpty(yearText) || TextUtils.isEmpty(totalPagesText) || TextUtils.isEmpty(currentPageText)) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Parse year, total pages, and rating with validation
-        int year, totalPages, rating;
+        // Parse year, total pages, and current page with validation
+        int year, totalPages, currentPage;
         try {
             year = Integer.parseInt(yearText);
             totalPages = Integer.parseInt(totalPagesText);
-            rating = Integer.parseInt(ratingText);
+            currentPage = Integer.parseInt(currentPageText);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Please enter valid numbers for year, total pages, and rating", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter valid numbers for year, total pages, and current page", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Get the current user ID
         String userId = auth.getCurrentUser().getUid();
 
-        Book newBook = new Book(title, author, description, year, 0, totalPages, rating);
-
+        Book newBook = new Book(title, author, description, year, currentPage, totalPages);
+        newBook.setCompleted(false); // Ensure the new book is not completed
 
         // Save the book to Firestore
         db.collection("books")
-                .add(newBook.toMap(userId)) // Use the Book class method to convert to a map
+                .add(newBook.toMap(userId))
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(AddBookActivity.this, "Book added successfully!", Toast.LENGTH_SHORT).show();
                     finish(); // Close the activity after saving

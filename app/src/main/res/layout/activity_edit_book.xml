@@ -8,43 +8,43 @@
         android:id="@+id/editTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:hint="Title" />
+        android:hint="Title"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/editTextAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:hint="Author" />
+        android:hint="Author"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:hint="Description" />
+        android:hint="Description"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/editTextYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:hint="Year" />
+        android:hint="Year"
+        android:padding="12dp" />
 
     <EditText
         android:id="@+id/editTextTotalPages"
         android:layout_width="match_parent"
-        android:padding="12dp"
         android:layout_height="wrap_content"
-        android:hint="Total Pages" />
+        android:hint="Total Pages"
+        android:padding="12dp" />
 
     <EditText
-        android:id="@+id/editTextRating"
+        android:id="@+id/editTextCurrentPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:hint="Rating" />
+        android:hint="Current Page"
+        android:padding="12dp" />
 
     <Button
         android:id="@+id/btnSaveBook"

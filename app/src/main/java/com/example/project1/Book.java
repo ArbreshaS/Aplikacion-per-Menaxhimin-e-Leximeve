@@ -10,19 +10,22 @@ public class Book {
     private int year;
     private int currentPage;
     private int totalPages;
-    private int rating;
+    private boolean completed;
+    private float rating;
     private String documentId;
 
-    public Book(String title, String author, String description, int year, int currentPage, int totalPages, int rating) {
+    public Book(String title, String author, String description, int year, int currentPage, int totalPages) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.year = year;
         this.currentPage = currentPage;
         this.totalPages = totalPages;
-        this.rating = rating;
+        this.completed = false; // Default to false
+        this.rating = 0.0f; // Default to no rating
     }
 
+    // Getters and Setters
     public String getTitle() {
         return title;
     }
@@ -71,11 +74,19 @@ public class Book {
         this.totalPages = totalPages;
     }
 
-    public int getRating() {
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -87,6 +98,7 @@ public class Book {
         this.documentId = documentId;
     }
 
+    // Convert to Firestore map
     public Map<String, Object> toMap(String userId) {
         Map<String, Object> bookMap = new HashMap<>();
         bookMap.put("Title", title);
@@ -95,6 +107,7 @@ public class Book {
         bookMap.put("Year", year);
         bookMap.put("CurrentPage", currentPage);
         bookMap.put("TotalPages", totalPages);
+        bookMap.put("completed", completed);
         bookMap.put("Rating", rating);
         bookMap.put("userId", userId);
         return bookMap;
