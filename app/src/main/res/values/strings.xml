@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project1</string>
+    <string name="app_name">BookKeeper</string>
     <string name="login_text">Login</string>
     <string name="logout">Logout</string>
     <string name="email">Email</string>

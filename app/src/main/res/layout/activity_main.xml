@@ -27,32 +27,31 @@
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BookMark"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:textColor="@android:color/holo_blue_dark"
-        android:gravity="center" />
+     android:textSize="22sp"
+     android:textStyle="bold"
+     android:layout_marginBottom="20dp"
+     android:textColor="@android:color/holo_blue_dark"
+     android:gravity="center" />
 
 
-    <Button
-        android:id="@+id/btn_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to Home" />
+ <Button
+     android:id="@+id/btn_home"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="Go to Home" />
 
-    <Button
-        android:id="@+id/btn_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Go to Profile" />
+ <Button
+     android:id="@+id/btn_profile"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="16dp"
+     android:text="Go to Profile" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/logout" />
+ <Button
+     android:id="@+id/logout"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="16dp"
+     android:text="@string/logout" />
 
 </LinearLayout>
