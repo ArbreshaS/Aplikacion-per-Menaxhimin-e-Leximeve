@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance(); 
         button = findViewById(R.id.logout);
         btnHome = findViewById(R.id.btn_home);
         btnProfile = findViewById(R.id.btn_profile);
