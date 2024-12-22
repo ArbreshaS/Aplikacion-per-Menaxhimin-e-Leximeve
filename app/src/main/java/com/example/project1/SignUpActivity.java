@@ -1,6 +1,7 @@
 package com.example.project1;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,10 @@ public class SignUpActivity extends AppCompatActivity {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
+
+        // Log për të kontrolluar të dhënat e futura
+        Log.d("SignUpActivity", "Name: " + name + ", Email: " + email);
+        Log.d("SignUpActivity", "Password field filled");
 
         // Verifikoni nëse të dhënat janë të plotësuara.
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
