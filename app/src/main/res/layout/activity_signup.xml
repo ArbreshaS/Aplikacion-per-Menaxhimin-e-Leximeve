@@ -46,6 +46,7 @@
         android:layout_marginHorizontal="16dp" />
 
     <!-- Password Input -->
+    // koment
     <EditText
         android:id="@+id/et_password"
         android:layout_width="0dp"
