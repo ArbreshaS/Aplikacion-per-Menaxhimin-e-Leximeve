@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // Verifikoni nëse të dhënat janë të plotësuara
+        // Verifikoni nëse të dhënat janë të plotësuara.
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(SignUpActivity.this, "Ju lutemi plotësoni të gjitha fushat", Toast.LENGTH_SHORT).show();
             return;
