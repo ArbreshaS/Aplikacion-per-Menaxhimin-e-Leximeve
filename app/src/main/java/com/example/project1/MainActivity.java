@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button button, btnHome, btnProfile;
     private static final String CHANNEL_ID = "welcome_notification";
-
+    //koment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
