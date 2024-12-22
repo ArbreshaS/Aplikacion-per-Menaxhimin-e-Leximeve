@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button button, btnHome, btnProfile;
     private static final String CHANNEL_ID = "welcome_notification";
-    //koment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();  // koment
         button = findViewById(R.id.logout);
         btnHome = findViewById(R.id.btn_home);
         btnProfile = findViewById(R.id.btn_profile);
