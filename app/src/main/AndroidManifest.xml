@@ -49,6 +49,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".SignUpActivity" />
+
     </application>
 
 </manifest>
