@@ -62,46 +62,40 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-        // Navigate to Home when "Go to Home" button is clicked
+        
         btnHome.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, Home.class);
             startActivity(intent);
         });
-
-        // Navigate to Profile when "Go to Profile" button is clicked
+        
         btnProfile.setOnClickListener(v -> {
-            // Ngarkimi i animacionit të kombinuar
+           
             Animation scaleFadeAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale_fade_out);
 
-            // Apliko animacionin tek butoni
             v.startAnimation(scaleFadeAnimation);
 
-            // Shto një listener për të pritur fundin e animacionit para navigimit
             scaleFadeAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    // Opsionale: Veprime kur fillon animacioni
+                    
                 }
-
+                
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    // Navigo në ekranin e profilit pasi të mbarojë animacioni
+                   
                     Intent intent = new Intent(MainActivity.this, Profile.class);
                     startActivity(intent);
-
-                    // Rikthe dukshmërinë e butonit (opsionale nëse ktheheni tek ky ekran më pas)
                     v.setAlpha(1.0f);
                 }
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-                    // Opsionale: Veprime gjatë përsëritjes së animacionit
+                   
                 }
             });
         });
 
 
-        // Create the notification channel
         createNotificationChannel();
     }
 
