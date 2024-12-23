@@ -22,6 +22,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,9 +70,36 @@ public class MainActivity extends AppCompatActivity {
 
         // Navigate to Profile when "Go to Profile" button is clicked
         btnProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, Profile.class);
-            startActivity(intent);
+            // Ngarkimi i animacionit të kombinuar
+            Animation scaleFadeAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale_fade_out);
+
+            // Apliko animacionin tek butoni
+            v.startAnimation(scaleFadeAnimation);
+
+            // Shto një listener për të pritur fundin e animacionit para navigimit
+            scaleFadeAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    // Opsionale: Veprime kur fillon animacioni
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    // Navigo në ekranin e profilit pasi të mbarojë animacioni
+                    Intent intent = new Intent(MainActivity.this, Profile.class);
+                    startActivity(intent);
+
+                    // Rikthe dukshmërinë e butonit (opsionale nëse ktheheni tek ky ekran më pas)
+                    v.setAlpha(1.0f);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    // Opsionale: Veprime gjatë përsëritjes së animacionit
+                }
+            });
         });
+
 
         // Create the notification channel
         createNotificationChannel();
