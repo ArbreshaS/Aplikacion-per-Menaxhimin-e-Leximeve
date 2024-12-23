@@ -35,7 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void handleSignUp() {
-        // Merrni të dhënat nga fushat e hyrjes
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
