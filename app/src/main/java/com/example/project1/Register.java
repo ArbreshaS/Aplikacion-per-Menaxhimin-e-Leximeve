@@ -3,15 +3,13 @@ package com.example.project1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,7 +27,6 @@ public class Register extends AppCompatActivity {
 
     TextInputEditText editTextEmail, editTextPassword;
     Button buttonReg;
-
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
@@ -38,10 +35,17 @@ public class Register extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+        if (currentUser != null) {
+            currentUser.reload().addOnCompleteListener(task -> {
+                if (currentUser.isEmailVerified()) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(Register.this, "Please verify your email before logging in.", Toast.LENGTH_SHORT).show();
+                    mAuth.signOut();
+                }
+            });
         }
     }
 
@@ -76,10 +80,12 @@ public class Register extends AppCompatActivity {
 
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
                 return;
             }
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
                 return;
             }
 
@@ -108,21 +114,29 @@ public class Register extends AppCompatActivity {
             }
 
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressBar.setVisibility(View.GONE);
-                            if (task.isSuccessful()) {
-                                Toast.makeText(Register.this, "Account created.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), Login.class);
-                                startActivity(intent);
-                                finish();
+                    .addOnCompleteListener(task -> {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(verificationTask -> {
+                                            if (verificationTask.isSuccessful()) {
+                                                Toast.makeText(Register.this, "Verification email sent. Please check your inbox.", Toast.LENGTH_SHORT).show();
+                                                mAuth.signOut();
+                                                Intent intent = new Intent(getApplicationContext(), Login.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Toast.makeText(Register.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(Register.this, "This email is already in use. Please choose another one.", Toast.LENGTH_SHORT).show();
                             } else {
-                                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                    Toast.makeText(Register.this, "This email is already in use. Please choose another one.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Register.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                }
+                                Toast.makeText(Register.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

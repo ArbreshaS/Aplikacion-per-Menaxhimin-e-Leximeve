@@ -8,9 +8,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.textfield.TextInputEditText;
+import androidx.annotation.NonNull;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,10 +19,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
 public class Login extends AppCompatActivity {
+
     TextInputEditText editTextEmail, editTextPassword;
     Button buttonLogin;
     FirebaseAuth mAuth;
@@ -58,14 +61,11 @@ public class Login extends AppCompatActivity {
         textView = findViewById(R.id.registerNow);
         textViewForgotPassword = findViewById(R.id.forgotPassword);
 
-
         textView.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Register.class);
             startActivity(intent);
             finish();
         });
-
-
 
         textViewForgotPassword.setOnClickListener(view -> {
             String email = String.valueOf(editTextEmail.getText()).trim();
@@ -89,7 +89,6 @@ public class Login extends AppCompatActivity {
                     });
         });
 
-
         buttonLogin.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             String email = String.valueOf(editTextEmail.getText());
@@ -98,8 +97,8 @@ public class Login extends AppCompatActivity {
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
                 return;
-             }
-           if (TextUtils.isEmpty(password)) {
+            }
+            if (TextUtils.isEmpty(password)) {
                 Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -108,10 +107,16 @@ public class Login extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null && user.isEmailVerified()) {
+                                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(Login.this, "Please verify your email before logging in.", Toast.LENGTH_SHORT).show();
+                                mAuth.signOut();
+                            }
                         } else {
                             String errorMessage = task.getException() != null ? task.getException().getMessage() : "Authentication failed.";
                             if (errorMessage.contains("The password is invalid")) {
