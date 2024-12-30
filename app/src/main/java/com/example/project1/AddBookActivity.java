@@ -23,7 +23,7 @@ public class AddBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
 
-        // Initialize views
+
         titleEditText = findViewById(R.id.editTextTitle);
         authorEditText = findViewById(R.id.editTextAuthor);
         descriptionEditText = findViewById(R.id.editTextDescription);
@@ -32,16 +32,16 @@ public class AddBookActivity extends AppCompatActivity {
         currentPageEditText = findViewById(R.id.editTextCurrentPage);
         saveButton = findViewById(R.id.btnSaveBook);
 
-        // Firebase instance
+
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        // Button listener to save book
+
         saveButton.setOnClickListener(v -> saveBook());
     }
 
     private void saveBook() {
-        // Get text from the fields
+
         String title = titleEditText.getText().toString().trim();
         String author = authorEditText.getText().toString().trim();
         String description = descriptionEditText.getText().toString().trim();
@@ -49,14 +49,14 @@ public class AddBookActivity extends AppCompatActivity {
         String totalPagesText = totalPagesEditText.getText().toString().trim();
         String currentPageText = currentPageEditText.getText().toString().trim();
 
-        // Check for empty fields
+
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(author) || TextUtils.isEmpty(description) ||
                 TextUtils.isEmpty(yearText) || TextUtils.isEmpty(totalPagesText) || TextUtils.isEmpty(currentPageText)) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Parse year, total pages, and current page with validation
+
         int year, totalPages, currentPage;
         try {
             year = Integer.parseInt(yearText);
@@ -67,18 +67,18 @@ public class AddBookActivity extends AppCompatActivity {
             return;
         }
 
-        // Get the current user ID
+
         String userId = auth.getCurrentUser().getUid();
 
         Book newBook = new Book(title, author, description, year, currentPage, totalPages);
-        newBook.setCompleted(false); // Ensure the new book is not completed
+        newBook.setCompleted(false);
 
-        // Save the book to Firestore
+
         db.collection("books")
                 .add(newBook.toMap(userId))
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(AddBookActivity.this, "Book added successfully!", Toast.LENGTH_SHORT).show();
-                    finish(); // Close the activity after saving
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(AddBookActivity.this, "Error adding book", Toast.LENGTH_SHORT).show();

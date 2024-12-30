@@ -71,6 +71,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         holder.completedButton.setOnClickListener(v -> openRatingDialog(book, position));
 
+
         holder.editButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, EditBookActivity.class);
             intent.putExtra("documentId", book.getDocumentId());

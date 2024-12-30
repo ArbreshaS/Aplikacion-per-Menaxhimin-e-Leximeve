@@ -25,7 +25,7 @@ public class Book {
         this.rating = 0.0f; // Default to no rating
     }
 
-    // Getters and Setters
+
     public String getTitle() {
         return title;
     }
@@ -98,7 +98,7 @@ public class Book {
         this.documentId = documentId;
     }
 
-    // Convert to Firestore map
+
     public Map<String, Object> toMap(String userId) {
         Map<String, Object> bookMap = new HashMap<>();
         bookMap.put("Title", title);

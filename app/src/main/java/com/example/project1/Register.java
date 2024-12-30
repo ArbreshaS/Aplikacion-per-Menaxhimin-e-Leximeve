@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class Register extends AppCompatActivity {
 
@@ -62,78 +63,69 @@ public class Register extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
+        textView.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
         });
 
-        buttonReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
+        buttonReg.setOnClickListener(view -> {
+            progressBar.setVisibility(View.VISIBLE);
+            String email = String.valueOf(editTextEmail.getText());
+            String password = String.valueOf(editTextPassword.getText());
 
-                // Password validation
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                // Password length check
-                if (password.length() < 6) {
-                    editTextPassword.setError("Password must be at least 6 characters");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+            if (password.length() < 6) {
+                editTextPassword.setError("Password must be at least 6 characters");
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
 
-                // Password should contain at least one digit
-                if (!password.matches(".*\\d.*")) {
-                    editTextPassword.setError("Password must contain at least one number");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+            if (!password.matches(".*\\d.*")) {
+                editTextPassword.setError("Password must contain at least one number");
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
 
-                // Password should contain at least one uppercase letter
-                if (!password.matches(".*[A-Z].*")) {
-                    editTextPassword.setError("Password must contain at least one uppercase letter");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+            if (!password.matches(".*[A-Z].*")) {
+                editTextPassword.setError("Password must contain at least one uppercase letter");
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
 
-                // Password should contain at least one special character
-                if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-                    editTextPassword.setError("Password must contain at least one special character");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+            if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+                editTextPassword.setError("Password must contain at least one special character");
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
 
-                // Proceed with Firebase registration if validation passes
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Account created.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                                    startActivity(intent);
-                                    finish();
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Register.this, "Account created.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), Login.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                    Toast.makeText(Register.this, "This email is already in use. Please choose another one.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(Register.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        });
-            }
+                        }
+                    });
         });
     }
 }

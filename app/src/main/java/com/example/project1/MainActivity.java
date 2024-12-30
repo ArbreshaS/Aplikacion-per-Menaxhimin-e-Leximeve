@@ -5,13 +5,11 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
-
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -19,7 +17,6 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.view.animation.Animation;
@@ -30,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button button, btnHome, btnProfile;
     private static final String CHANNEL_ID = "welcome_notification";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        auth = FirebaseAuth.getInstance(); 
+        auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.logout);
         btnHome = findViewById(R.id.btn_home);
         btnProfile = findViewById(R.id.btn_profile);
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            showWelcomeNotification(); // Show notification after successful login
+            showWelcomeNotification();
         }
 
         button.setOnClickListener(v -> {
@@ -62,39 +60,45 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-        
         btnHome.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, Home.class);
-            startActivity(intent);
-        });
-        
-        btnProfile.setOnClickListener(v -> {
-           
             Animation scaleFadeAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale_fade_out);
-
             v.startAnimation(scaleFadeAnimation);
 
             scaleFadeAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
-                public void onAnimationStart(Animation animation) {
-                    
-                }
-                
+                public void onAnimationStart(Animation animation) { }
+
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                   
+                    Intent intent = new Intent(MainActivity.this, Home.class);
+                    startActivity(intent);
+                    v.setAlpha(1.0f);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) { }
+            });
+        });
+
+        btnProfile.setOnClickListener(v -> {
+            Animation scaleFadeAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale_fade_out);
+            v.startAnimation(scaleFadeAnimation);
+
+            scaleFadeAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) { }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
                     Intent intent = new Intent(MainActivity.this, Profile.class);
                     startActivity(intent);
                     v.setAlpha(1.0f);
                 }
 
                 @Override
-                public void onAnimationRepeat(Animation animation) {
-                   
-                }
+                public void onAnimationRepeat(Animation animation) { }
             });
         });
-
 
         createNotificationChannel();
     }
@@ -120,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification) // Replace with your notification icon
-                .setContentTitle("Welcome")
-                .setContentText("Welcome to BookKeeper!")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Welcome to BookKeeper!")
+                .setContentText("Thank you for using our app!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showWelcomeNotification(); // Permission granted, show notification
+                showWelcomeNotification();
             } else {
                 Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
             }

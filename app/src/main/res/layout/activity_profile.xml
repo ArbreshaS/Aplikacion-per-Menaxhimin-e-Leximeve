@@ -14,9 +14,6 @@
         android:src="@drawable/logo" />
 
 
-    <!-- User Email -->
-
-    <!-- RecyclerView for Completed Books -->
     <TextView
         android:id="@+id/textViewUserEmail"
         android:layout_width="wrap_content"

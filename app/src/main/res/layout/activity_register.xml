@@ -43,10 +43,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
-            android:hint="@string/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/input_background" >
+            android:background="@drawable/input_background"
+            android:hint="@string/email"
+            android:textColorHint="#0277BD"
+            tools:ignore="VisualLintTextFieldSize">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -57,11 +59,13 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
-            android:hint="@string/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_background"
-            android:inputType="textPassword">
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorHint="#0277BD"
+            tools:ignore="VisualLintTextFieldSize">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -70,15 +74,16 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/btn_register"
-        android:text="@string/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/button_background"
+        android:text="@string/register"
 
-        />
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/loginNow"

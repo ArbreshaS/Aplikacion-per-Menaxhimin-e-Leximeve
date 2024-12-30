@@ -11,7 +11,7 @@
     android:background="@drawable/bg_main"
     tools:context=".MainActivity">
 
-    <!-- Logo -->
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="120dp"
@@ -27,31 +27,31 @@
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-     android:textSize="22sp"
-     android:textStyle="bold"
-     android:layout_marginBottom="20dp"
-     android:textColor="@android:color/holo_blue_dark"
-     android:gravity="center" />
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:gravity="center" />
 
 
  <Button
-     android:id="@+id/btn_home"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:text="Go to Home" />
+        android:id="@+id/btn_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home" />
 
  <Button
-     android:id="@+id/btn_profile"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_marginTop="16dp"
-     android:text="Go to Profile" />
+        android:id="@+id/btn_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/profile" />
 
  <Button
-     android:id="@+id/logout"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_marginTop="16dp"
-     android:text="@string/logout" />
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/logout" />
 
 </LinearLayout>

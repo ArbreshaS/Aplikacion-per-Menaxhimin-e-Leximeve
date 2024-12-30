@@ -79,7 +79,7 @@ public class Home extends AppCompatActivity {
                             int currentPage = document.contains("CurrentPage") ? document.getLong("CurrentPage").intValue() : 0;
                             boolean completed = document.contains("completed") ? document.getBoolean("completed") : false;
 
-                            // Ensure we don't display completed books
+
                             if (!completed) {
                                 Book book = new Book(title, author, description, year, currentPage, totalPages);
                                 book.setDocumentId(document.getId());

@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+
         if (mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -58,14 +58,15 @@ public class Login extends AppCompatActivity {
         textView = findViewById(R.id.registerNow);
         textViewForgotPassword = findViewById(R.id.forgotPassword);
 
-        // Navigate to Register Activity
+
         textView.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Register.class);
             startActivity(intent);
             finish();
         });
 
-        // Forgot Password functionality
+
+
         textViewForgotPassword.setOnClickListener(view -> {
             String email = String.valueOf(editTextEmail.getText()).trim();
             if (TextUtils.isEmpty(email)) {
@@ -88,7 +89,7 @@ public class Login extends AppCompatActivity {
                     });
         });
 
-        // Login functionality
+
         buttonLogin.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             String email = String.valueOf(editTextEmail.getText());
@@ -97,8 +98,8 @@ public class Login extends AppCompatActivity {
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
                 return;
-            }
-            if (TextUtils.isEmpty(password)) {
+             }
+           if (TextUtils.isEmpty(password)) {
                 Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -32,7 +32,7 @@ android {
     }
 }
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:32.0.0"))  // Use BOM
+    implementation(platform("com.google.firebase:firebase-bom:32.0.0"))
 
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth")

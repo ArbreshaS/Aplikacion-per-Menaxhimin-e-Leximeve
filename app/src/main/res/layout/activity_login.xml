@@ -23,16 +23,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="30dp"/>
+
     <TextView
 
-        android:text="@string/login_text"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       />
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/login_text"
+
+        android:textSize="25sp"
+        android:textStyle="bold" />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_background"
-            >
+            tools:ignore="VisualLintTextFieldSize">
 
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -57,11 +58,13 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
-            android:hint="@string/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_background"
-            android:inputType="textPassword">
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColorHint="#0277BD"
+            tools:ignore="VisualLintTextFieldSize">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -94,7 +97,8 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/registerNow"

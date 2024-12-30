@@ -5,7 +5,12 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
+    <string name="registerbutton">Register</string>
     <string name="loginNow">Click to login</string>
     <string name="registerNow">Click to register</string>
+    <string name="home">Go to home</string>
+    <string name="profile">Go to profile</string>
+    <string name="noBook"> No books added yet!</string>
+
     <string name="logo_description">Logo of the app</string>
 </resources>

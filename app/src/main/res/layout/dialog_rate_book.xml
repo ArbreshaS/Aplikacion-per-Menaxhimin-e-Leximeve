@@ -15,6 +15,7 @@
         android:textSize="18sp"
         android:paddingBottom="8dp" />
 
+
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"

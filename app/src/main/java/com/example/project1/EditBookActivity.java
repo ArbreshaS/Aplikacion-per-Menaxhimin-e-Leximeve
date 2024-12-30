@@ -31,7 +31,7 @@ public class EditBookActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // Get intent data
+        
         documentId = getIntent().getStringExtra("documentId");
         titleEditText.setText(getIntent().getStringExtra("title"));
         authorEditText.setText(getIntent().getStringExtra("author"));
